@@ -1,6 +1,6 @@
 # Game on - Projet d'études
 
-- Lien du site : https://hugo-de-yrigoyen.github.io/game-on/
+- Lien du site : https://hugo-de-yrigoyen.github.io/game-on/front
 - Dans le cadre des mes études de développeur d'application Javascript
 - Site événementiel avec **modal Javascript** dont il fallait coder le fonctionnement
 
