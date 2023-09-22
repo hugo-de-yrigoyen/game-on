@@ -1,16 +1,9 @@
-function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-
 // DOM Elements
+const navbar = document.querySelector("#navbar");
+const form = document.getElementsByName("reserve")[0];
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const cross = document.querySelector(".close");
+const closeCross = document.querySelector(".close");
 const submit = document.querySelector(".btn-submit");
 const firstName = document.querySelector("#first");
 const lastName = document.querySelector("#last");
@@ -24,12 +17,15 @@ const location4 = document.querySelector("#location4");
 const location5 = document.querySelector("#location5");
 const location6 = document.querySelector("#location6");
 const checkbox1 = document.querySelector("#checkbox1");
-const form = document.querySelector(".modal-body");
+const formBody = document.querySelector(".modal-body");
 const message = document.querySelectorAll(".modal-body")[1];
-const closeButton = document.querySelector(".btn-validate");
+const closeButton = document.querySelector(".btn-close");
 let error;
-const emailRegex =
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const nameRegex = /^[a-zA-Z]*$/;
+const emailRegex = /^[a-zA-Z0-9.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9]{2,}$/;
+
+// navbar event
+navbar.addEventListener("click", editNav);
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -40,11 +36,14 @@ function launchModal() {
 }
 
 // close modal event
-cross.addEventListener("click", closeModal);
+closeCross.addEventListener("click", closeModal);
 
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+  form.classList.remove("hidden");
+  message.classList.add("hidden");
+  form.reset();
 }
 
 // submit modal event
@@ -57,22 +56,22 @@ function submitModal(e) {
   document.querySelectorAll(".error-message").forEach((e) => e.remove());
   error = false;
 
-  if (firstName.value.length < 2) {
+  if (firstName.value.length < 2 || !firstName.value.match(nameRegex)) {
     addAfterElement(
       "p",
       "error-message",
-      "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
+      "Veuillez entrer 2 lettres ou plus pour le champ du prénom.",
       "#first"
     );
 
     error = true;
   }
 
-  if (lastName.value.length < 2) {
+  if (lastName.value.length < 2 || !lastName.value.match(nameRegex)) {
     addAfterElement(
       "p",
       "error-message",
-      "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
+      "Veuillez entrer 2 lettres ou plus pour le champ du nom.",
       "#last"
     );
 
@@ -145,7 +144,7 @@ function submitModal(e) {
     return;
   }
 
-  form.innerHTML = "";
+  form.classList.add("hidden");
   message.classList.remove("hidden");
 
   return;
@@ -156,15 +155,27 @@ closeButton.addEventListener("click", validate);
 function validate(e) {
   e.preventDefault();
   modalbg.style.display = "none";
+  form.classList.remove("hidden");
+  message.classList.add("hidden");
+  form.reset();
 }
 
-function addAfterElement(tag, className, content, Element) {
+function addAfterElement(tag, className, content, element) {
   const newElement = document.createElement(tag);
   const newContent = document.createTextNode(content);
 
   newElement.appendChild(newContent);
   newElement.classList.add(className);
 
-  const parentElement = document.querySelector(Element).parentNode;
+  const parentElement = document.querySelector(element).parentNode;
   parentElement.append(newElement);
+}
+
+function editNav() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
 }
