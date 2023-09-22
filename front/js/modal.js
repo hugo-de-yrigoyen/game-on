@@ -145,7 +145,6 @@ function submitModal(e) {
     return;
   }
 
-  // document.forms["reserve"].submit();
   form.innerHTML = "";
   message.classList.remove("hidden");
 
@@ -166,6 +165,6 @@ function addAfterElement(tag, className, content, Element) {
   newElement.appendChild(newContent);
   newElement.classList.add(className);
 
-  const previousElement = document.querySelector(Element).parentNode;
-  previousElement.append(newElement);
+  const parentElement = document.querySelector(Element).parentNode;
+  parentElement.append(newElement);
 }
